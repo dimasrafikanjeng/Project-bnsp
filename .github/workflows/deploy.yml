@@ -1,4 +1,4 @@
-name: Auto Deploy to VPS
+name: Autoo Deploy to VPS
 
 on:
   push:
