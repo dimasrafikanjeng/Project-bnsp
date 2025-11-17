@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    image: sample-app:latest
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /:/rootfs:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  node_exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+
